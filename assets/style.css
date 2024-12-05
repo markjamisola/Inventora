@@ -1,0 +1,386 @@
+/* Reset Default Browser Styles */
+@import url('https://fonts.cdnfonts.com/css/unbounded');
+@import url('https://fonts.cdnfonts.com/css/planet-n');
+body, h1, h2, p, a, table, th, td {
+    margin: 0;
+    padding: 0;
+    font-family: 'Unbounded', sans-serif;
+}
+
+/* General Layout */
+body {
+    background-color: #803d3b;
+    color: white;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    background: #FAEED1;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1), 0px 10px 50px rgba(0, 0, 0, 0.15);
+    margin-bottom: 50px;
+}
+
+@media (min-width: 1024px) {
+    .container {
+        width: 40%;
+    }
+}
+
+
+/* Login container */
+.login-container {
+    background-color: #FAEED1;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1), 0px 10px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .login-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .login-form input {
+        font-size: 1em;
+    }
+}
+
+/* Heading styles */
+.login-container h1 {
+    color: #803d3b;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+/* Form styles */
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form label {
+    text-align: left;
+    margin-bottom: 5px;
+    color: #803d3b;
+}
+
+.login-form input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 3px solid #803d3b;
+    border-radius: 8px;
+    font-size: 1em;
+}
+
+select {
+    font-size: 16px;
+    padding: 10px;   
+    width: 100%;    
+    border-radius: 8px; 
+    border: 3px solid #803d3b; 
+    background-color: white; 
+    margin-bottom: 12px;
+}
+
+
+.login-form button {
+    padding: 10px;
+    background-color: #803d3b;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.login-form button:hover {
+    background-color: #f5a9a1;
+}
+
+body.login-bg {
+    background-color: #803d3b;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Header */
+.header {
+    background-color: transparent;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensures the header stays above other content */
+    border-collapse: collapse;
+}
+.header nav a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+header h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.header nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.header nav a:hover {
+    text-decoration: underline;
+}
+/* Main Section */
+.main-container {
+    text-align: center;
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.description {
+    font-size: 1.2rem;
+    color: white;
+    margin-bottom: 20px;
+}
+
+
+/* Navigation Menu */
+.nav-menu {
+    margin-top: 20px;
+}
+
+.nav-menu .btn {
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    background-color: #FAEED1;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.nav-menu .btn:hover {
+    background-color: #ffffff;
+}
+
+/* Footer Styling */
+footer {
+    text-align: center;
+    background-color: transparent;
+    color: white;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.logout{
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+/* Table Styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #803d3b;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.table th {
+    background-color: #803d3b;
+    color: white;
+}
+
+.table tr:nth-child(even) {
+    background-color: #803d3b;
+}
+
+.table tr:hover {
+    background-color:#ac5350;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #803d3b;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.btn-edit{
+    display: inline-block;
+    padding: 5px 7px;
+    background-color: #FAEED1;
+    color: black;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 5px;
+
+}
+
+.btn:hover {
+    background-color: #ac5350;
+}
+
+.btn-danger {
+    display: inline-block;
+    padding: 5px 7px;
+    background-color: red;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 5px;
+
+}
+.btn-login {
+    display: inline-block;
+    padding: 10px;
+    background-color: #FAEED1;
+    color: black;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.btn-register{
+    display: inline-block;
+    text-decoration: none;
+    color: #803d3b;
+    margin-top: 15px;
+}
+
+.btn-login:hover{
+    background-color: #ffffff;
+}
+
+.btn-danger:hover {
+    background-color: #e53935;
+}
+
+/* Back Button */
+.btn-back {
+    margin-top: 20px;
+    background-color: #803d3b;
+    color: #555;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: inline-block;
+    color: white;
+}
+
+.btn-back:hover {
+    color: white;
+    background-color: #ac5350;
+    text-decoration: none;
+    border-color: #ac5350;
+}
+
+/* Form Styling */
+.add{
+    color: black;
+    text-align: center;
+}
+.welcome {
+    display: flex;
+    flex-direction: column;  /* Arrange the items vertically */
+    justify-content: center;  /* Center items vertically */
+    align-items: center;  /* Center items horizontally */
+    text-align: center;  /* Centers the text */
+
+    height: 100vh;  /* Take full viewport height */
+}
+
+.form {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: black;
+}
+
+.form input {
+    padding: 8px;
+    border: 3px solid #803d3b;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.form input:focus {
+    border-color: #ac5350;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 139, 139, 0.5);
+}
+
+/* Success and Error Messages */
+.success {
+    margin-top: 20px;
+    padding: 10px;
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+}
+
+.error {
+    margin-top: 20px;
+    padding: 10px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+}
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+}
