@@ -225,13 +225,6 @@ footer p {
     color: white;
 }
 
-.table tr:nth-child(even) {
-    background-color: #803d3b;
-}
-
-.table tr:hover {
-    background-color:#ac5350;
-}
 
 /* Buttons */
 .btn {

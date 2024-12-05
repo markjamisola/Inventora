@@ -3,17 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <title>Inventora</title>
-    <script src="../assets/script.js"></script>
+    <style>
+        /* Style for the header */
+        .header {
+            display: flex;
+            justify-content: space-between; /* Space between logo and nav */
+            align-items: center; /* Center items vertically */
+            padding: 20px; /* Add padding to the header */
+            background-color: #000000; /* Dark background for the header */
+            color: white; /* White text */
+            position: fixed; /* Fix the header to the top */
+            top: 0; /* Position the header at the top */
+            left: 0; /* Ensure it is aligned to the left */
+            width: 100%; /* Make the header span the full width */
+            z-index: 1000; /* Ensure the header stays on top of other content */
+        }
+
+        .header h1 {
+            margin: 0; /* Remove default margin */
+            padding-left: 30px;
+        }
+
+        /* Navigation links style */
+        .header nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px; /* Space between links */
+            font-size: 16px; /* Font size */
+            transition: color 0.3s ease; /* Smooth color transition */
+            padding-right: 30px
+        }
+
+        .header nav a:hover {
+            color: #803d3b; /* Change color on hover */
+        }
+
+        /* Logout link specific style */
+        .header nav .logout {
+            color:#803d3b; /* Logout link color */
+        }
+
+        /* Responsive design for mobile screens */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column; /* Stack items vertically on smaller screens */
+                align-items: flex-start; /* Align items to the left */
+            }
+            .header nav {
+                margin-top: 10px; /* Add space between the logo and navigation */
+            }
+        }
+
+        /* Add padding to the body to prevent content from hiding under the fixed header */
+        body {
+            padding-top: 80px; /* Adjust based on header height */
+        }
+    </style>
 </head>
 <body>
     <header class="header">
-    <h1>Inventora</h1>
+        <h1>Inventora</h1>
         <nav>
             <a href="../admin_dashboard.php">Home</a>
-            <a href="list.php">Products</a>
+            <a href="../products/list.php">Products</a>
             <a class="logout" href="../logout.php">Logout</a>
         </nav>
     </header>
-    <main class="container">
+</body>
+</html>
