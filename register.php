@@ -68,7 +68,7 @@ if (isset($_POST['register'])) {
             background-color: #000000;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7), 0px 4px 10px rgba(50, 50, 50, 0.5); /* Black/gray shadow */
             margin-bottom: 10px
         }
 

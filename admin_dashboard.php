@@ -20,7 +20,7 @@ if ($_SESSION['role'] !== 'admin') {
         @import url('https://fonts.cdnfonts.com/css/steppe-trial');
         
         body {
-            background-color: #803d3b;
+            background-color: white;
             font-family: 'Unbounded', sans-serif;
         }
 
@@ -29,14 +29,14 @@ if ($_SESSION['role'] !== 'admin') {
             bottom: 0;
             width: 100%;
             background-color: transparent;
-            color: white;
+            color: black;
             text-align: center;
             padding: 10px;
         }
 
         .app-name {
             text-align: center;
-            color: white;
+            color: black;
             font-size: 50px;
             font-family: 'Unbounded', sans-serif;
             margin-top: 50px;
@@ -44,7 +44,7 @@ if ($_SESSION['role'] !== 'admin') {
 
         .catchphrase {
             text-align: center;
-            color: white;
+            color: black;
             font-size: 18px;
             font-style: italic;
             margin-top: 30px;
@@ -61,12 +61,12 @@ if ($_SESSION['role'] !== 'admin') {
 
         .main-container h1 {
             text-align: center;
-            color: white;
+            color:black;
         }
 
         .description {
             text-align: center;
-            color: white;
+            color: black;
             margin-bottom: 20px;
             font-size: 18px;
         }
@@ -75,6 +75,7 @@ if ($_SESSION['role'] !== 'admin') {
             display: flex;
             justify-content: center;
             gap: 20px;
+            color: white;
         }
 
         .nav-menu a {
@@ -87,8 +88,8 @@ if ($_SESSION['role'] !== 'admin') {
         }
 
         .nav-menu a:hover {
-            background-color: white;
-            color: black;
+            background-color:  #803d3b;
+            color: white;
             transform: scale(1.05);
             transition: transform 0.3s ease, background-color 0.3s ease;
         }
@@ -100,8 +101,11 @@ if ($_SESSION['role'] !== 'admin') {
         }
         h1 {
             text-align: center;
-            color: white;
+            color: black;
             margin-top: 160px;
+        }
+        .header h1{
+            color: white;
         }
     </style>
 </head>

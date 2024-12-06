@@ -46,7 +46,7 @@ if (isset($_POST['login'])) {
         @import url('https://fonts.cdnfonts.com/css/steppe-trial');
         
         body {
-            background-color: #803d3b;
+            background-color: white;
             font-family: 'Unbounded', sans-serif;
         }
 
@@ -55,14 +55,14 @@ if (isset($_POST['login'])) {
             bottom: 0;
             width: 100%;
             background-color: transparent;
-            color: white;
+            color: black;
             text-align: center;
             padding: 10px;
         }
 
         .app-name {
             text-align: center;
-            color: white;
+            color: black;
             font-size: 50px;
             font-family: 'Unbounded', sans-serif;
             margin-top: 50px;
@@ -75,7 +75,7 @@ if (isset($_POST['login'])) {
 
         .catchphrase {
             text-align: center;
-            color: white;
+            color: black;
             font-size: 18px;
             font-style: italic;
             margin-bottom: 30px;
@@ -87,12 +87,12 @@ if (isset($_POST['login'])) {
             background-color: #000000;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7), 0px 4px 10px rgba(50, 50, 50, 0.5); /* Black/gray shadow */
         }
 
         .login-container h1 {
             text-align: center;
-            color: white;
+            color: black;
         }
 
         .login-form {
@@ -109,7 +109,7 @@ if (isset($_POST['login'])) {
             margin-bottom: 15px;
             padding: 10px;
             border-radius: 5px;
-            border: 1px solid #ccc;
+            border: 1px solid #803d3b;
         }
 
         .btn-login {
@@ -124,12 +124,12 @@ if (isset($_POST['login'])) {
         }
 
         .btn-login:hover {
-    background-color: white;
-    color: black;
-    border-color: white;
-    transform: scale(1.05); /* Reduced scaling */
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
+            background-color: white;
+            color: black;
+            border-color: white;
+            transform: scale(1.05); /* Reduced scaling */
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
 
 
         .btn-register {

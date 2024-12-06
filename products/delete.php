@@ -16,7 +16,7 @@ include('../header.php');
         @import url('https://fonts.cdnfonts.com/css/unbounded');
         @import url('https://fonts.cdnfonts.com/css/steppe-trial');
         .body {
-            background-color: #803d3b;
+            background-color: white;
             font-family: 'Unbounded', sans-serif;
         }
 
@@ -45,20 +45,33 @@ include('../header.php');
         .btn {
             background-color: #000000;
             border-color: #000000;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7), 0px 4px 10px rgba(50, 50, 50, 0.5); /* Black/gray shadow */
             transition: transform 0.3s ease, background-color 0.3s ease;
             color: white;
         }
 
         
-        .card{
-            background-color: #000000;
+        .card, .card-body, .card-header {
+            background-color: #000000; /* Card background */
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7), 0px 4px 10px rgba(50, 50, 50, 0.5); /* Black/gray shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add smooth hover effect */
+            border-color: #000000;
         }
 
+        .card:hover {
+            transform: translateY(-5px); /* Elevate on hover */
+            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.9), 0px 6px 15px rgba(50, 50, 50, 0.7); /* More prominent shadow on hover */
+        }
+
+
         .btn:hover {
-            background-color: white;
-            color: black;
+            background-color: #803d3b;
+            color: white;
             transform: scale(1.1);
             border-color: white;
+            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.9), 0px 6px 15px rgba(50, 50, 50, 0.7); /* More prominent shadow on hover */
+
         }
 
         .success, .error {
@@ -69,7 +82,7 @@ include('../header.php');
         }
 
         .success {
-            background-color: #28a745;
+            background-color: #803d3b;
             padding: 10px;
         }
 
@@ -84,7 +97,7 @@ include('../header.php');
         <div class="my-4">
             <div class="d-flex justify-content-between mb-3">
                 <a class="btn btn-primary" href="../admin_dashboard.php">Back to Home</a>
-                <a class="btn btn-success" href="list.php">Back to Product List</a>
+                <a class="btn btn-success" href="list.php">Back to List</a>
             </div>
 
             <div class="card shadow-sm">
@@ -101,7 +114,7 @@ include('../header.php');
                             $stmt = $pdo->prepare('DELETE FROM products WHERE product_id = ?');
                             $stmt->execute([$id]);
 
-                            echo "<p class='success'>Product deleted successfully!</p>";
+                            echo "<p class='success'>Product DELETED successfully!</p>";
                         } catch (PDOException $e) {
                             echo "<p class='error'>Error: " . $e->getMessage() . "</p>";
                         }

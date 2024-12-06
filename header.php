@@ -24,42 +24,39 @@
 
         .header h1 {
             margin: 0; /* Remove default margin */
-            padding-left: 30px;
+            margin-left: 20px;
         }
 
         /* Navigation links style */
         .header nav a {
             color: white;
             text-decoration: none;
-            margin-left: 20px; /* Space between links */
+            margin: 20px; /* Space between links */
             font-size: 16px; /* Font size */
             transition: color 0.3s ease; /* Smooth color transition */
-            padding-right: 30px
+
         }
 
         .header nav a:hover {
             color: #803d3b; /* Change color on hover */
         }
 
-        /* Logout link specific style */
         .header nav .logout {
-            color:#803d3b; /* Logout link color */
+            color:#803d3b; 
         }
 
-        /* Responsive design for mobile screens */
         @media (max-width: 768px) {
             .header {
-                flex-direction: column; /* Stack items vertically on smaller screens */
-                align-items: flex-start; /* Align items to the left */
+                flex-direction: column;
+                align-items: flex-start;
             }
             .header nav {
-                margin-top: 10px; /* Add space between the logo and navigation */
+                margin-top: 10px;
             }
         }
 
-        /* Add padding to the body to prevent content from hiding under the fixed header */
         body {
-            padding-top: 80px; /* Adjust based on header height */
+            padding-top: 80px; 
         }
     </style>
 </head>
