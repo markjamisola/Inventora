@@ -16,6 +16,7 @@
             background-color: #000000; /* Dark background for the header */
             color: white; /* White text */
             position: fixed; /* Fix the header to the top */
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7), 0px 4px 10px rgba(50, 50, 50, 0.5); /* Black/gray shadow */
             top: 0; /* Position the header at the top */
             left: 0; /* Ensure it is aligned to the left */
             width: 100%; /* Make the header span the full width */
@@ -64,8 +65,8 @@
     <header class="header">
         <h1>Inventora</h1>
         <nav>
-            <a href="../admin_dashboard.php">Home</a>
-            <a href="../products/list.php">Products</a>
+            <a href="admin_dashboard.php">Home</a>
+            <a href="list.php">Products</a>
             <a class="logout" href="../logout.php">Logout</a>
         </nav>
     </header>

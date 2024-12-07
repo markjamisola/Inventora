@@ -1,6 +1,13 @@
-<?php include('../header.php'); ?>
-<?php session_start(); include('../db.php'); ?>
+<?php include('header.php'); ?>
+<?php
+session_start();
+include('../db.php');
+if ($_SESSION['role'] !== 'admin') {
+    header('Location: ../staff/staff_dashboard.php');
+    exit;
+}
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -148,7 +155,7 @@
 <div class="my-4">
     <!-- Navigation Links -->
     <div class="d-flex justify-content-between mb-3">
-        <a class="btn btn-primary" href="../admin_dashboard.php">Back to Home</a>
+        <a class="btn btn-primary" href="users.php">View Users</a>
         <a class="btn btn-success" href="add.php">Add New Product</a>
     </div>
 

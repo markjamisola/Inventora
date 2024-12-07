@@ -1,7 +1,13 @@
 <?php 
 session_start();
 include('../db.php'); 
-include('../header.php'); 
+include('header.php'); 
+
+if ($_SESSION['role'] !== 'admin') {
+    header('Location: ../staff/staff_dashboard.php');
+    exit;
+}
+
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -160,7 +166,7 @@ if (isset($_POST['submit'])) {
     <div class="container mt-5">
         <div class="my-4">
             <div class="d-flex justify-content-between mb-3">
-                <a class="btn btn-primary" href="../admin_dashboard.php">Back to Home</a>
+                <a class="btn btn-primary" href="admin_dashboard.php">Back to Home</a>
                 <a class="btn btn-success" href="list.php">Back to List</a>
             </div>
 

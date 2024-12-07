@@ -1,8 +1,8 @@
-<?php include('header.php'); ?>
+<?php include('staff_header.php'); ?>
 <?php
 session_start();
-if ($_SESSION['role'] !== 'admin') {
-    header('Location: login.php');
+if ($_SESSION['role'] !== 'staff') {
+    header('Location: ../admin/admin_dashboard.php');
     exit;
 }
 ?>
@@ -15,7 +15,6 @@ if ($_SESSION['role'] !== 'admin') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <title>Admin Dashboard</title>
     <style>
-        /* Header and footer styles to match the login/register pages */
         @import url('https://fonts.cdnfonts.com/css/unbounded');
         @import url('https://fonts.cdnfonts.com/css/steppe-trial');
         
@@ -110,17 +109,11 @@ if ($_SESSION['role'] !== 'admin') {
     </style>
 </head>
 <body>
-
-
-    <div class="catchphrase"></div>
-
-        <h1>Welcome to Inventora Admin, <?= $_SESSION['username'] ?></h1>
-        <p class="description">Efficiently manage your products, track stock levels, and keep your store organized.</p>
-        <nav class="nav-menu">
-            <a href="products/list.php" class="btn">Manage Products</a>
-        </nav>
-    </div>
-
+    <h1>Welcome Back, <?= $_SESSION['username'] ?></h1>
+    <p class="description">View all products and update stock levels as needed.</p>
+    <nav class="nav-menu">
+        <a href="staff_list.php" class="btn">View Products</a>
+    </nav>
     <footer>
         <p>&copy; 2024 Inventora. All rights reserved.</p>
     </footer>

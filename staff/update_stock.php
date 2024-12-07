@@ -1,7 +1,12 @@
 <?php 
 session_start();
-include('db.php');
+include('../db.php');
 include('staff_header.php');
+
+if ($_SESSION['role'] !== 'staff') {
+    header('Location: ../admin/admin_dashboard.php');
+    exit;
+}
 
 // Check if user is logged in and has the 'staff' role
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'staff') {

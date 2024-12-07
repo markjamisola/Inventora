@@ -1,4 +1,12 @@
 <?php
+session_start();
+if ($_SESSION['role'] !== 'admin') {
+    header('Location: ../staff/staff_dashboard.php');
+    exit;
+}
+
+?>
+<?php
 // Include the database connection file
 include('../db.php'); // Replace with the actual path to your DB connection script
 

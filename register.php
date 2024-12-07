@@ -33,7 +33,7 @@ if (isset($_POST['register'])) {
         @import url('https://fonts.cdnfonts.com/css/steppe-trial');
         
         body {
-            background-color: #803d3b;
+            background-color: white;
             font-family: 'Unbounded', sans-serif;
         }
 
@@ -42,13 +42,13 @@ if (isset($_POST['register'])) {
             bottom: 1;
             width: 100%;
             background-color: transparent;
-            color: white;
+            color: black;
             text-align: center;
         }
 
         .app-name {
             text-align: center;
-            color: white;
+            color: black;
             font-size: 50px;
             font-family: 'Unbounded', sans-serif;
             margin-top: 50px;
@@ -56,7 +56,7 @@ if (isset($_POST['register'])) {
 
         .catchphrase {
             text-align: center;
-            color: white;
+            color: black;
             font-size: 18px;
             font-style: italic;
             margin-bottom: 30px;
@@ -74,7 +74,7 @@ if (isset($_POST['register'])) {
 
         .login-container h1 {
             text-align: center;
-            color: white;
+            color: black;
         }
 
         .login-form {

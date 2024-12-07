@@ -7,7 +7,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <title>Inventora</title>
     <style>
-        /* Make the header stick to the top */
         .header {
             display: flex;
             justify-content: space-between;
@@ -15,11 +14,12 @@
             padding: 20px;
             background-color: #000000;
             color: white;
-            position: fixed; /* Make header fixed */
-            top: 0; /* Align at the top */
-            left: 0; /* Align at the left */
-            width: 100%; /* Full width */
-            z-index: 1000; /* Ensure header stays on top */
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7), 0px 4px 10px rgba(50, 50, 50, 0.5); 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            z-index: 1000; 
         }
 
         .header h1 {
@@ -55,9 +55,8 @@
             }
         }
 
-        /* Add padding to the body to prevent content from hiding under the fixed header */
         body {
-            padding-top: 80px; /* Adjust the padding based on header height */
+            padding-top: 80px;
         }
     </style>
 </head>
@@ -66,7 +65,8 @@
         <h1>Inventora</h1>
         <nav>
             <a href="staff_dashboard.php">Home</a>
-            <a class="logout" href="logout.php">Logout</a>
+            <a href="staff_list.php">Products</a>
+            <a class="logout" href="../logout.php">Logout</a>
         </nav>
     </header>
 </body>

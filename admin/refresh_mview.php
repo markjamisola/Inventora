@@ -1,4 +1,12 @@
 <?php
+session_start();
+if ($_SESSION['role'] !== 'admin') {
+    header('Location: ../staff/staff_dashboard.php');
+    exit;
+}
+
+?>
+<?php
 include('../db.php'); // Include database connection
 
 // Check if the refresh button was clicked

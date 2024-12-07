@@ -1,11 +1,15 @@
 <?php 
 session_start();
-include('db.php');  // Adjusted path
-include('staff_header.php');  // Adjusted path
+include('../db.php'); 
+include('staff_header.php');
 
-// Check if user is logged in and has the 'staff' role
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'staff') {
     header('Location: login.php');
+    exit;
+}
+
+if ($_SESSION['role'] !== 'staff') {
+    header('Location: ../admin/admin_dashboard.php');
     exit;
 }
 ?>
@@ -28,10 +32,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'staff') {
         }
 
         .card, .card-body, .card-header {
-            background-color: #000000; /* Card background */
-            border-radius: 15px; /* Rounded corners */
-            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7), 0px 4px 10px rgba(50, 50, 50, 0.5); /* Black/gray shadow */
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add smooth hover effect */
+            background-color: #000000; 
+            border-radius: 15px; 
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7), 0px 4px 10px rgba(50, 50, 50, 0.5); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
             border-color: #000000;
 
         }
@@ -42,7 +46,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'staff') {
 
         .card:hover {
             transform: translateY(-5px); /* Elevate on hover */
-            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.9), 0px 6px 15px rgba(50, 50, 50, 0.7); /* More prominent shadow on hover */
+            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.9), 0px 6px 15px rgba(50, 50, 50, 0.7);
         }
 
 
@@ -69,8 +73,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'staff') {
         }
 
         .table-hover tbody tr:hover {
-            color: black !important; /* Force text color to black */
-            background-color: #fff !important; /* Force background color to white */
+            color: black !important;
+            background-color: #fff !important; 
         }
         .card{
             background-color: #000000;
@@ -83,7 +87,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'staff') {
         .btn{
             background-color: #000000;
             border-color: #000000;
-            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7), 0px 4px 10px rgba(50, 50, 50, 0.5); /* Black/gray shadow */
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7), 0px 4px 10px rgba(50, 50, 50, 0.5); 
             transition: transform 0.3s ease, background-color 0.3s ease;
             color: white;
         }
@@ -93,7 +97,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'staff') {
             color: white;
             transform: scale(1.05);
             border-color: white;
-            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.9), 0px 6px 15px rgba(50, 50, 50, 0.7); /* More prominent shadow on hover */
+            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.9), 0px 6px 15px rgba(50, 50, 50, 0.7); 
         }
         .btn-back {
             background-color: #000000;
@@ -126,13 +130,13 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'staff') {
         }
 
         .btn-close {
-            background-color: #ff6f61; /* Set the background color */
+            background-color: #ff6f61;
             border: none;
-            color: white; /* Remove any border */
+            color: white; 
         }
 
         .btn-close:hover {
-            background-color: #ff6f61; /* Optional: Hover effect */
+            background-color: #ff6f61;
         }
 
         .form label {
@@ -212,11 +216,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'staff') {
                     <form id="updateStockForm">
                         <div class="mb-3">
                             <label for="productName" class="form-label d-flex justify-content-center">Product Name</label>
-                            <p id="productName" class=" current text-center"></p> <!-- Display product name as text -->
+                            <p id="productName" class=" current text-center"></p> 
                         </div>
                         <div class="mb-3">
                             <label for="currentStock" class="form-label d-flex justify-content-center">Current Stock</label>
-                            <p id="currentStock" class=" current text-center"></p> <!-- Display current stock as text -->
+                            <p id="currentStock" class=" current text-center"></p> 
                         </div>
                         <div class="mb-3 d-flex justify-content-between">
                             <button type="button" class="btn btn-danger" id="decrementStock">-</button>
