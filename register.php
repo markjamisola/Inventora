@@ -4,7 +4,9 @@ include('db.php');
 if (isset($_POST['register'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $role = $_POST['role'];
+
+    // Set the default role to "staff"
+    $role = 'staff';
 
     // Password hashing
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -28,10 +30,9 @@ if (isset($_POST['register'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <title>Register</title>
     <style>
-        /* Header and footer styles to match login.php */
         @import url('https://fonts.cdnfonts.com/css/unbounded');
         @import url('https://fonts.cdnfonts.com/css/steppe-trial');
-        
+
         body {
             background-color: white;
             font-family: 'Unbounded', sans-serif;
@@ -39,7 +40,7 @@ if (isset($_POST['register'])) {
 
         footer {
             position: fixed;
-            bottom: 1;
+            bottom: 0;
             width: 100%;
             background-color: transparent;
             color: black;
@@ -68,8 +69,8 @@ if (isset($_POST['register'])) {
             background-color: #000000;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7), 0px 4px 10px rgba(50, 50, 50, 0.5); /* Black/gray shadow */
-            margin-bottom: 10px
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7), 0px 4px 10px rgba(50, 50, 50, 0.5);
+            margin-bottom: 10px;
         }
 
         .login-container h1 {
@@ -87,8 +88,7 @@ if (isset($_POST['register'])) {
             color: white;
         }
 
-        .login-form input,
-        .login-form select {
+        .login-form input {
             margin-bottom: 15px;
             padding: 10px;
             border-radius: 5px;
@@ -107,13 +107,12 @@ if (isset($_POST['register'])) {
         }
 
         .btn-login:hover {
-    background-color: white;
-    color: black;
-    border-color: white;
-    transform: scale(1.05); /* Reduced scaling */
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
+            background-color: white;
+            color: black;
+            border-color: white;
+            transform: scale(1.05);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
 
         .btn-register {
             display: block;
@@ -149,17 +148,12 @@ if (isset($_POST['register'])) {
     <div class="login-container">
         <h2>Register</h2>
         <form method="post" class="login-form">
-            <label for="role">Role:</label>
-            <select name="role" id="role" required>
-                <option value="admin">Admin</option>
-                <option value="staff">Staff</option>
-            </select>
             <label for="username">Username:</label>
             <input type="text" name="username" id="username" required>
-            
+
             <label for="password">Password:</label>
             <input type="password" name="password" id="password" required>
-            
+
             <button type="submit" name="register" class="btn-login">Register</button>
         </form>
         <a class="btn-register" href="login.php">Back to Login</a>

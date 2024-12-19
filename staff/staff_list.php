@@ -41,7 +41,7 @@ if ($_SESSION['role'] !== 'staff') {
         }
 
         .container{
-            padding-top: 100px;
+            padding-top: 30px;
         }
 
         .card:hover {

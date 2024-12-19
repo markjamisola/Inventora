@@ -184,8 +184,8 @@ if ($_SESSION['role'] !== 'admin') {
                                     <th>Stock</th>
                                     <th>Price</th>
                                     <th>Total Value</th>
+                                    <th>History</th> 
                                     <th>Actions</th>
-                                    <th>Adjustment History</th> <!-- New column -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -218,14 +218,15 @@ if ($_SESSION['role'] !== 'admin') {
                                             <td>{$row['stock_quantity']}</td>
                                             <td>{$row['price_per_unit']}</td>
                                             <td>{$row['total_stock_value']}</td>
+                                                                                        <td>
+                                                <!-- Adjustment History Button -->
+                                                <a class='btn btn-info btn-sm' href='#' data-bs-toggle='modal' data-bs-target='#adjustmentHistoryModal' data-product-id='{$row['product_id']}'>View</a>
+                                            </td>
                                             <td class='action-btn'>
                                                 <a class='btn btn-sm' href='edit.php?id={$row['product_id']}'>Edit</a>
-                                                <a class='btn btn-sm' href='delete.php?id={$row['product_id']}'>Delete</a>
+                                                <a class='btn btn-sm' href='delete.php?id={$row['product_id']}'>X</a>
                                             </td>
-                                            <td>
-                                                <!-- Adjustment History Button -->
-                                                <a class='btn btn-info btn-sm' href='#' data-bs-toggle='modal' data-bs-target='#adjustmentHistoryModal' data-product-id='{$row['product_id']}'>View History</a>
-                                            </td>
+
                                           </tr>";
                                 }
                                 ?>
