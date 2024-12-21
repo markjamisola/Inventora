@@ -207,8 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
                         // Handle search query
                         $search_query = isset($_GET['search']) ? $_GET['search'] : '';
 
-                        // SQL query to include calculated total stock value
-                        // Use ILIKE for trigram-based fuzzy search
+                        // ILIKE for trigram
                         $stmt = $pdo->prepare('
                             SELECT 
                                 product_id, 
@@ -224,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
                             LIMIT 10
                         ');
 
-                        // Execute the query with search term wrapped in wildcards for pattern matching
+                        // gi wrap sa wildcards for pattern matching
                         $stmt->execute(['%' . $search_query . '%', '%' . $search_query . '%']);
 
                         // Display results
@@ -254,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
 </div>
 
 <div class="modal fade" id="adjustmentHistoryModal" tabindex="-1" aria-labelledby="adjustmentHistoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered"> <!-- Centered and larger modal -->
+    <div class="modal-dialog modal-lg modal-dialog-centered"> 
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title text-center" id="adjustmentHistoryModalLabel">Adjustment History</h5>
@@ -268,8 +267,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
         </div>
     </div>
 </div>
-
-
 
 
 <div class="col-lg-4">
@@ -320,7 +317,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
         <div class="card shadow-sm">
             <div class="card-header bg-black text-white d-flex justify-content-between align-items-center">
                 <h5 class="card-title mb-0">Critical Stock Products</h5>
-                     <!-- Refresh Button -->
+                     <!-- Refresh-->
                 <form method="POST" action="refresh_mview.php" class="mb-0">
                 <button button type="submit" name="refresh" class="crt-btn btn">Refresh</button>
                 </form>
@@ -339,7 +336,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
                         </thead>
                         <tbody>
                             <?php
-                            // Query the materialized view for products with less than 10 stock
                             $stmt = $pdo->query('SELECT product_name, stock_quantity FROM mview_stock_critical');
                             while ($row = $stmt->fetch()) {
                                 echo "<tr>
@@ -390,7 +386,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
     </div>
 </div>
                             
-<!-- Modal for Adding Product -->
+
 <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -430,19 +426,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var productId = button.data('product-id'); // Extract product ID
     
-    console.log("Product ID: " + productId);  // Check if the product ID is passed correctly
+    console.log("Product ID: " + productId); 
     
     $.ajax({
         url: 'get_adjustment_history.php',
         type: 'GET',
         data: { product_id: productId },
         success: function (response) {
-            console.log(response);  // Check the response from the PHP script
+            console.log(response); 
             $('#adjustmentHistoryContent').html(response);
         },
         error: function (xhr, status, error) {
-            // Handle any errors here
-            console.log("AJAX Error: " + error);  // Debugging error message
+            console.log("AJAX Error: " + error);
             $('#adjustmentHistoryContent').html('<p>Error fetching adjustment history.</p>');
         }
     });

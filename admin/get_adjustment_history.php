@@ -7,10 +7,10 @@ if ($_SESSION['role'] !== 'admin') {
 
 ?>
 <?php
-// Include the database connection file
-include('../db.php'); // Replace with the actual path to your DB connection script
 
-// Check if product_id is provided via GET
+include('../db.php'); 
+
+// Check the product_id
 if (isset($_GET['product_id'])) {
     $product_id = $_GET['product_id'];
 
@@ -28,10 +28,10 @@ if (isset($_GET['product_id'])) {
         }
     } catch (PDOException $e) {
         echo "<div class='error-message'>Error: " . htmlspecialchars($e->getMessage()) . "</div>";
-        exit; // Stop execution if there's a critical error
+        exit; 
     }
 
-    // Prepare the SQL query to call the get_adjustment_history function and join with the users table
+    // the SQL query to call the get_adjustment_history function and join sa users table
     try {
         $stmt = $pdo->prepare("
             SELECT 

@@ -3,7 +3,7 @@ session_start();
 include('../db.php'); 
 include('header.php'); 
 
-// Redirect non-admin users to their respective dashboard
+// Redirect non-admin users
 if ($_SESSION['role'] !== 'admin') {
     header('Location: ../staff/staff_dashboard.php');
     exit;

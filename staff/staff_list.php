@@ -184,7 +184,6 @@ if ($_SESSION['role'] !== 'staff') {
                             <?php
                             // Handle search query
                             $search_query = isset($_GET['search']) ? $_GET['search'] : '';
-                            // Fetch products based on the search term
                             $stmt = $pdo->prepare('
                                 SELECT * FROM products 
                                 WHERE product_name ILIKE :search_query OR category ILIKE :search_query 
@@ -216,7 +215,7 @@ if ($_SESSION['role'] !== 'staff') {
     </div>
 </div>
 
- <!-- Modal for updating stock -->
+<!-- Modal for updating stock -->
 <div class="modal fade" id="updateStockModal" tabindex="-1" aria-labelledby="updateStockModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -226,7 +225,6 @@ if ($_SESSION['role'] !== 'staff') {
             </div>
             <div class="modal-body">
                 <form id="updateStockForm">
-                    <!-- Hidden input to store product ID -->
                     <input type="hidden" id="productIdInput" name="product_id">
 
                     <div class="mb-3">
