@@ -1,12 +1,26 @@
-<?php include('header.php'); ?>
 <?php
+include('header.php');
 session_start();
 include('../db.php');
+
 if ($_SESSION['role'] !== 'admin') {
     header('Location: ../staff/staff_dashboard.php');
     exit;
 }
 
+// reset
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
+    $product_id = intval($_POST['product_id']);
+    try {
+        // Reset total_added and total_removed for the specified product
+        $pdo->prepare('UPDATE product_summary SET total_added = 0, total_removed = 0 WHERE product_id = ?')->execute([$product_id]);
+
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit;
+    } catch (PDOException $e) {
+        $error_message = "Error resetting data: " . htmlspecialchars($e->getMessage());
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -162,81 +176,83 @@ if ($_SESSION['role'] !== 'admin') {
     <div class="row g-3">
 
     <div class="col-lg-8">
-            <div class="card shadow-sm">
-                <div class="card-header bg-black text-white text-center">
-                    <h5 class="card-title mb-0">Product List</h5>
+    <div class="card shadow-sm">
+        <div class="card-header bg-black text-white text-center">
+            <h5 class="card-title mb-0">Product List</h5>
+        </div>
+        <div class="card-body">
+            <!-- Search Form -->
+            <form method="GET" action="" class="mb-3">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search products..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                    <button type="submit" class="btn btn-primary">Search</button>
                 </div>
-                <div class="card-body">
-                    <!-- Search Form -->
-                    <form method="GET" action="" class="mb-3">
-                        <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Search products..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-                            <button type="submit" class="btn btn-primary">Search</button>
-                        </div>
-                    </form>
+            </form>
 
-                    <div class="table-container">
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Product Name</th>
-                                    <th>Category</th>
-                                    <th>Stock</th>
-                                    <th>Price</th>
-                                    <th>Total Value</th>
-                                    <th>History</th> 
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                // Handle search query
-                                $search_query = isset($_GET['search']) ? '%' . $_GET['search'] . '%' : '%';
+            <div class="table-container">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Category</th>
+                            <th>Stock</th>
+                            <th>Price</th>
+                            <th>Total Value</th>
+                            <th>History</th> 
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Handle search query
+                        $search_query = isset($_GET['search']) ? $_GET['search'] : '';
 
-                                // SQL query to include calculated total stock value
-                                $stmt = $pdo->prepare('
-                                    SELECT 
-                                        product_id, 
-                                        product_name, 
-                                        category, 
-                                        stock_quantity, 
-                                        price_per_unit, 
-                                        calculate_stock_value(product_id) AS total_stock_value 
-                                    FROM 
-                                        products 
-                                    WHERE 
-                                        product_name LIKE ? OR category LIKE ? 
-                                    LIMIT 10
-                                ');
-                                $stmt->execute([$search_query, $search_query]);
+                        // SQL query to include calculated total stock value
+                        // Use ILIKE for trigram-based fuzzy search
+                        $stmt = $pdo->prepare('
+                            SELECT 
+                                product_id, 
+                                product_name, 
+                                category, 
+                                stock_quantity, 
+                                price_per_unit, 
+                                calculate_stock_value(product_id) AS total_stock_value 
+                            FROM 
+                                products 
+                            WHERE 
+                                product_name ILIKE ? OR category ILIKE ? 
+                            LIMIT 10
+                        ');
 
-                                // Display results
-                                while ($row = $stmt->fetch()) {
-                                    echo "<tr>
-                                            <td>{$row['product_name']}</td>
-                                            <td>{$row['category']}</td>
-                                            <td>{$row['stock_quantity']}</td>
-                                            <td>{$row['price_per_unit']}</td>
-                                            <td>{$row['total_stock_value']}</td>
-                                                                                        <td>
-                                                <!-- Adjustment History Button -->
-                                                <a class='btn btn-info btn-sm' href='#' data-bs-toggle='modal' data-bs-target='#adjustmentHistoryModal' data-product-id='{$row['product_id']}'>View</a>
-                                            </td>
-                                            <td class='action-btn'>
-                                                <a class='btn btn-sm' href='edit.php?id={$row['product_id']}'>Edit</a>
-                                                <a class='btn btn-sm' href='delete.php?id={$row['product_id']}'>X</a>
-                                            </td>
+                        // Execute the query with search term wrapped in wildcards for pattern matching
+                        $stmt->execute(['%' . $search_query . '%', '%' . $search_query . '%']);
 
-                                          </tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                        // Display results
+                        while ($row = $stmt->fetch()) {
+                            echo "<tr>
+                                    <td>{$row['product_name']}</td>
+                                    <td>{$row['category']}</td>
+                                    <td>{$row['stock_quantity']}</td>
+                                    <td>{$row['price_per_unit']}</td>
+                                    <td>{$row['total_stock_value']}</td>
+                                    <td>
+                                        <!-- Adjustment History Button -->
+                                        <a class='btn btn-info btn-sm' href='#' data-bs-toggle='modal' data-bs-target='#adjustmentHistoryModal' data-product-id='{$row['product_id']}'>View</a>
+                                    </td>
+                                    <td class='action-btn'>
+                                        <a class='btn btn-sm' href='edit.php?id={$row['product_id']}'>Edit</a>
+                                        <a class='btn btn-sm' href='delete.php?id={$row['product_id']}'>X</a>
+                                    </td>
+                                  </tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
-        
+    </div>
+</div>
+
 <div class="modal fade" id="adjustmentHistoryModal" tabindex="-1" aria-labelledby="adjustmentHistoryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered"> <!-- Centered and larger modal -->
         <div class="modal-content">
@@ -255,40 +271,49 @@ if ($_SESSION['role'] !== 'admin') {
 
 
 
-    <div class="col-lg-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-black text-white text-center">
-                <h5 class="card-title mb-0">Product Summary</h5>
-            </div>
-            <div class="card-body">
-                <div class="table-container">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Product Name</th>
-                                <th>Stock Quantity</th>
-                                <th>Total Added</th>
-                                <th>Total Removed</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $summary_stmt = $pdo->query('SELECT product_name, stock_quantity, total_added, total_removed FROM product_summary LIMIT 10');
-                            while ($summary_row = $summary_stmt->fetch()) {
-                                echo "<tr>
-                                        <td>{$summary_row['product_name']}</td>
-                                        <td>{$summary_row['stock_quantity']}</td>
-                                        <td>{$summary_row['total_added']}</td>
-                                        <td>{$summary_row['total_removed']}</td>
-                                      </tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
+
+<div class="col-lg-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-black text-white text-center">
+            <h5 class="card-title mb-0">Product Summary</h5>
+        </div>
+        <div class="card-body">
+            <?php if (isset($error_message)) : ?>
+                <div class="alert alert-danger"><?php echo $error_message; ?></div>
+            <?php endif; ?>
+            <div class="table-container">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Total Added</th>
+                            <th>Total Removed</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $summary_stmt = $pdo->query('SELECT product_id, product_name, total_added, total_removed FROM product_summary LIMIT 10');
+                        while ($summary_row = $summary_stmt->fetch()) {
+                            echo "<tr>
+                                    <td>{$summary_row['product_name']}</td>
+                                    <td>{$summary_row['total_added']}</td>
+                                    <td>{$summary_row['total_removed']}</td>
+                                    <td>
+                                        <form method='POST' class='d-inline'>
+                                            <input type='hidden' name='product_id' value='{$summary_row['product_id']}'>
+                                            <button type='submit' class='btn btn-warning btn-sm'>Reset</button>
+                                        </form>
+                                    </td>
+                                  </tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 
 
     <div class="col-lg-8 mt-4">

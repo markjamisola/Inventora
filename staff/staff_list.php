@@ -7,7 +7,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'staff') {
     header('Location: login.php');
     exit;
 }
-
+if ($_SESSION['role'] !== 'staff') {
+    echo "Role is not staff: " . $_SESSION['role'];  // Debugging line
+    header('Location: login.php');
+    exit;
+}
 if ($_SESSION['role'] !== 'staff') {
     header('Location: ../admin/admin_dashboard.php');
     exit;
@@ -150,90 +154,100 @@ if ($_SESSION['role'] !== 'staff') {
     </style>
 </head>
 <body class="body">
-    <div class="container mt-5">
-        <div class="my-4">
-            <div class="card shadow-sm">
-                <div class="card-header bg-black text-white text-center">
-                    <h5 class="card-title mb-0">Product List</h5>
-                </div>
-                <div class="card-body">
-                    <!-- Search Form -->
-                    <form method="GET" action="" class="mb-3">
-                        <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Search products..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-                            <button type="submit" class="btn btn-primary">Search</button>
-                        </div>
-                    </form>
-
-                    <div class="table-container">
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Product Name</th>
-                                    <th>Category</th>
-                                    <th>Stock Quantity</th>
-                                    <th>Price Per Unit</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                 // Handle search query
-                                 $search_query = isset($_GET['search']) ? '%' . $_GET['search'] . '%' : '%';
-                                 // Fetch products based on the search term
-                                 $stmt = $pdo->prepare('SELECT * FROM products WHERE product_name LIKE ? OR category LIKE ? LIMIT 10');
-                                 $stmt->execute([$search_query, $search_query]);
-
-                                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                     echo "<tr>
-                                             <td>{$row['product_name']}</td>
-                                             <td>{$row['category']}</td>
-                                             <td>{$row['stock_quantity']}</td>
-                                             <td>{$row['price_per_unit']}</td>
-                                             <td>
-                                                 <button class='btn btn-sm btn-primary' data-bs-toggle='modal' data-bs-target='#updateStockModal' data-product-id='{$row['product_id']}' data-product-name='{$row['product_name']}' data-stock-quantity='{$row['stock_quantity']}'>Update</button>
-                                             </td>
-                                           </tr>";
-                                 }
-                                ?>
-                            </tbody>
-                        </table>
+<div class="container mt-5">
+    <div class="my-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-black text-white text-center">
+                <h5 class="card-title mb-0">Product List</h5>
+            </div>
+            <div class="card-body">
+                <!-- Search Form -->
+                <form method="GET" action="" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search products..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                        <button type="submit" class="btn btn-primary">Search</button>
                     </div>
+                </form>
+
+                <div class="table-container">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Stock Quantity</th>
+                                <th>Price Per Unit</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            // Handle search query
+                            $search_query = isset($_GET['search']) ? $_GET['search'] : '';
+                            // Fetch products based on the search term
+                            $stmt = $pdo->prepare('
+                                SELECT * FROM products 
+                                WHERE product_name ILIKE :search_query OR category ILIKE :search_query 
+                                ORDER BY similarity(product_name, :search_query) DESC 
+                                LIMIT 10
+                            ');
+                            $stmt->execute([':search_query' => '%' . $search_query . '%']);
+
+                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                echo "<tr>
+                                        <td>{$row['product_name']}</td>
+                                        <td>{$row['category']}</td>
+                                        <td>{$row['stock_quantity']}</td>
+                                        <td>{$row['price_per_unit']}</td>
+                                        <td>
+                                            <button class='btn btn-sm btn-primary' data-bs-toggle='modal' data-bs-target='#updateStockModal' 
+                                                data-product-id='{$row['product_id']}' 
+                                                data-product-name='{$row['product_name']}' 
+                                                data-stock-quantity='{$row['stock_quantity']}'>Update</button>
+                                        </td>
+                                      </tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Modal for updating stock -->
-    <div class="modal fade" id="updateStockModal" tabindex="-1" aria-labelledby="updateStockModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-center">
-                    <h5 class="modal-title" id="updateStockModalLabel ">Update Stock</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="updateStockForm">
-                        <div class="mb-3">
-                            <label for="productName" class="form-label d-flex justify-content-center">Product Name</label>
-                            <p id="productName" class=" current text-center"></p> 
-                        </div>
-                        <div class="mb-3">
-                            <label for="currentStock" class="form-label d-flex justify-content-center">Current Stock</label>
-                            <p id="currentStock" class=" current text-center"></p> 
-                        </div>
-                        <div class="mb-3 d-flex justify-content-between">
-                            <button type="button" class="btn btn-danger" id="decrementStock">-</button>
-                            <input type="number" id="newStock" class="form-control text-center" value="0" readonly>
-                            <button type="button" class="btn btn-success" id="incrementStock">+</button>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Update Stock</button>
-                    </form>
-                </div>
+ <!-- Modal for updating stock -->
+<div class="modal fade" id="updateStockModal" tabindex="-1" aria-labelledby="updateStockModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+                <h5 class="modal-title" id="updateStockModalLabel">Update Stock</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateStockForm">
+                    <!-- Hidden input to store product ID -->
+                    <input type="hidden" id="productIdInput" name="product_id">
 
+                    <div class="mb-3">
+                        <label for="productName" class="form-label d-flex justify-content-center">Product Name</label>
+                        <p id="productName" class="current text-center"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label for="currentStock" class="form-label d-flex justify-content-center">Current Stock</label>
+                        <p id="currentStock" class="current text-center"></p>
+                    </div>
+                    <div class="mb-3 d-flex justify-content-between">
+                        <button type="button" class="btn btn-danger" id="decrementStock">-</button>
+                        <input type="number" id="newStock" class="form-control text-center" value="0" readonly>
+                        <button type="button" class="btn btn-success" id="incrementStock">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Update Stock</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Success Modal -->
     <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
@@ -253,8 +267,7 @@ if ($_SESSION['role'] !== 'staff') {
     </div>
 
     <script>
-        // Handle the modal data population and stock updates
-        document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
         var updateStockModal = document.getElementById('updateStockModal');
         updateStockModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget;
@@ -262,6 +275,7 @@ if ($_SESSION['role'] !== 'staff') {
             var productName = button.getAttribute('data-product-name');
             var stockQuantity = button.getAttribute('data-stock-quantity');
 
+            // Set the modal content
             var productNameElement = document.getElementById('productName');
             var currentStockElement = document.getElementById('currentStock');
             var newStockInput = document.getElementById('newStock');
@@ -269,6 +283,9 @@ if ($_SESSION['role'] !== 'staff') {
             productNameElement.textContent = productName;  // Set product name
             currentStockElement.textContent = stockQuantity;  // Set current stock
             newStockInput.value = stockQuantity;  // Set new stock field to current stock value
+
+            // Store product ID in the hidden input
+            document.getElementById('productIdInput').value = productId;
         });
 
         // Increment stock
@@ -285,36 +302,35 @@ if ($_SESSION['role'] !== 'staff') {
             }
         });
 
-    // Handle the stock update form submission
-    document.getElementById('updateStockForm').addEventListener('submit', function (e) {
-        e.preventDefault();
+        // Handle the stock update form submission
+        document.getElementById('updateStockForm').addEventListener('submit', function (e) {
+            e.preventDefault();
 
-        var newStock = document.getElementById('newStock').value;
-        var productId = document.querySelector('[data-product-id]').getAttribute('data-product-id');
+            var newStock = document.getElementById('newStock').value;
+            var productId = document.getElementById('productIdInput').value;  // Get product ID from hidden input
 
-        // Use AJAX to send the stock update request to the server
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'update_stock.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                // Show success modal
-                var successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                successModal.show();
-                // Close the update modal after success
-                var updateStockModal = bootstrap.Modal.getInstance(document.getElementById('updateStockModal'));
-                updateStockModal.hide();
-                // Refresh the page after a while
-                setTimeout(function() {
-                    window.location.reload();
-                }, 2000);
-            }
-        };
-        xhr.send('product_id=' + productId + '&new_stock_quantity=' + newStock);
+            // Use AJAX to send the stock update request to the server
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'update_stock.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Show success modal
+                    var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                    successModal.show();
+                    // Close the update modal after success
+                    var updateStockModal = bootstrap.Modal.getInstance(document.getElementById('updateStockModal'));
+                    updateStockModal.hide();
+                    // Refresh the page after a while
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 2000);
+                }
+            };
+            xhr.send('product_id=' + productId + '&new_stock_quantity=' + newStock);
+        });
     });
-});
-
-    </script>
+</script>
 
 </body>
 </html>
