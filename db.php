@@ -4,7 +4,7 @@ $dbname = 'inventory_db';
 $username = 'admin'; 
 $password = '@admin123'; 
 //$username = 'staff'; 
-//$password = '@staff456'; 
+//$password = '@staff456';
 
 try {
    
